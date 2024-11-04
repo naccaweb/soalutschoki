@@ -1,0 +1,127 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <limits> 
+
+using namespace std;
+
+struct Mahasiswa {
+    string nama;
+    string npm;
+    string kode;
+    string jurusan;
+    double pembayaranAwal;
+    int jumlahCicilan;
+    double besarCicilan;
+    int pembayaranKe;
+    double uangKuliah;
+    double uangKuliahTerbayar;
+    double sisaUangKuliah;
+};
+
+int main() {
+    char tambahLagi;  
+    int noMahasiswa = 0;  
+    Mahasiswa mahasiswa[100]; 
+
+    do {
+       
+        cout << "\nData Mahasiswa ke-" << noMahasiswa + 1 << endl;
+        
+        cout << "Nama Mahasiswa: ";
+        getline(cin, mahasiswa[noMahasiswa].nama);
+
+        
+        cout << "NPM Mahasiswa: ";
+        cin >> mahasiswa[noMahasiswa].npm;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+
+    
+        cout << "Kode Mahasiswa: ";
+        cin >> mahasiswa[noMahasiswa].kode;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+
+        
+        cout << "Jurusan: ";
+        getline(cin, mahasiswa[noMahasiswa].jurusan);
+
+        
+        cout << "Pembayaran Awal (Rp): ";
+        cin >> mahasiswa[noMahasiswa].pembayaranAwal;
+
+        
+        cout << "Jumlah Cicilan: ";
+        cin >> mahasiswa[noMahasiswa].jumlahCicilan;
+
+        
+        cout << "Besar Cicilan (Rp): ";
+        cin >> mahasiswa[noMahasiswa].besarCicilan;
+
+        
+        mahasiswa[noMahasiswa].uangKuliah = mahasiswa[noMahasiswa].pembayaranAwal + (mahasiswa[noMahasiswa].jumlahCicilan * mahasiswa[noMahasiswa].besarCicilan);
+
+    
+        cout << "\nMasukkan pembayaran ke berapa: ";
+        cin >> mahasiswa[noMahasiswa].pembayaranKe;
+
+        
+        if (mahasiswa[noMahasiswa].pembayaranKe <= mahasiswa[noMahasiswa].jumlahCicilan && mahasiswa[noMahasiswa].pembayaranKe > 0) {
+            mahasiswa[noMahasiswa].uangKuliahTerbayar = mahasiswa[noMahasiswa].pembayaranAwal + (mahasiswa[noMahasiswa].pembayaranKe * mahasiswa[noMahasiswa].besarCicilan);
+            mahasiswa[noMahasiswa].sisaUangKuliah = mahasiswa[noMahasiswa].uangKuliah - mahasiswa[noMahasiswa].uangKuliahTerbayar;
+
+       
+            cout << fixed << setprecision(0); 
+            cout << "\nPembayaran ke-" << mahasiswa[noMahasiswa].pembayaranKe << endl;
+            cout << "Kode Mahasiswa: " << mahasiswa[noMahasiswa].kode << endl;
+            cout << "Jurusan: " << mahasiswa[noMahasiswa].jurusan << endl;
+            cout << "Pembayaran Awal (Rp): " << mahasiswa[noMahasiswa].pembayaranAwal << endl;
+            cout << "Jumlah Cicilan: " << mahasiswa[noMahasiswa].jumlahCicilan << endl;
+            cout << "Besar Cicilan (Rp): " << mahasiswa[noMahasiswa].besarCicilan << endl;
+            cout << "Uang Kuliah (Rp): " << mahasiswa[noMahasiswa].uangKuliah << endl;
+            cout << "Uang Kuliah Terbayar (Rp): " << mahasiswa[noMahasiswa].uangKuliahTerbayar << endl;
+            cout << "Sisa Uang Kuliah yang Harus Dibayar (Rp): " << mahasiswa[noMahasiswa].sisaUangKuliah << endl;
+        } else {
+            cout << "Pembayaran ke tidak valid, harap masukkan angka antara 1 dan " << mahasiswa[noMahasiswa].jumlahCicilan << "." << endl;
+        }
+	
+        cout << "Apakah masih ingin menambahkan data mahasiswa (y/t)? ";
+        cin >> tambahLagi;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+
+        noMahasiswa++;  
+
+    } while (tambahLagi == 'y' && noMahasiswa < 100);
+
+    cout << "\n\nTabel Data Pembayaran Mahasiswa\n";
+    cout << "================================================================================================================================================\n";
+    cout << setw(3) << "No" 
+         << setw(15) << "Nama" 
+         << setw(10) << "Kode" 
+         << setw(15) << "Jurusan" 
+         << setw(20) << "UK"
+         << setw(20) << "Awal" 
+         << setw(8) << "Cicil" 
+         << setw(15) << "Cicilan" 
+         << setw(15) << "Pembayaran Ke" 
+         << setw(8) << "UKT" 
+         << setw(15) << "Sisa (Rp)" << endl;
+    cout << "===============================================================================================================================================\n";
+
+    for (int i = 0; i < noMahasiswa; i++) {
+        cout << setw(3) << i + 1
+             << setw(15) << mahasiswa[i].nama 
+             << setw(10) << mahasiswa[i].kode 
+             << setw(25) << mahasiswa[i].jurusan 
+             << setw(15) << fixed << setprecision(0) << mahasiswa[i].uangKuliah
+             << setw(15) << fixed << setprecision(0) << mahasiswa[i].pembayaranAwal 
+             << setw(8) << mahasiswa[i].jumlahCicilan 
+             << setw(15) << fixed << setprecision(0) << mahasiswa[i].besarCicilan 
+             << setw(8) << mahasiswa[i].pembayaranKe  
+             << setw(15) << fixed << setprecision(0) << mahasiswa[i].uangKuliahTerbayar 
+             << setw(15) << fixed << setprecision(0) << mahasiswa[i].sisaUangKuliah << endl;
+    }
+
+    cout << "===============================================================================================================================================\n";
+
+    return 0;
+}
